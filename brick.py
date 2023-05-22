@@ -1,18 +1,34 @@
 # brick.py
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, BRICK_WIDTH, BRICK_HEIGHT, BLUE, RED, GREEN
 import pygame
-from config import SCREEN_WIDTH, BRICK_WIDTH, BRICK_HEIGHT, BLUE
 
 class Brick:
-    def __init__(self, pos_x, pos_y):
-        self.brick = pygame.Rect(pos_x, pos_y, BRICK_WIDTH, BRICK_HEIGHT)
-
-    def draw(self, screen):
-        pygame.draw.rect(screen, BLUE, self.brick)
+    def __init__(self, x, y, color, hits):
+        self.rect = pygame.Rect(x, y, BRICK_WIDTH, BRICK_HEIGHT)
+        self.color = color
+        self.hits_remaining = hits
 
 class Bricks:
-    def __init__(self):
-        self.bricks = [Brick(i*(BRICK_WIDTH+2), j*(BRICK_HEIGHT+2)) for i in range(SCREEN_WIDTH // (BRICK_WIDTH+2)) for j in range(5)]
+    def __init__(self, layout):
+        self.bricks = []
+        for i in range(len(layout)):
+            for j in range(len(layout[0])):
+                if layout[i][j] == 1:
+                    self.bricks.append(Brick(j*(BRICK_WIDTH+2), i*(BRICK_HEIGHT+2), BLUE, 1))
+                elif layout[i][j] == 2:
+                    self.bricks.append(Brick(j*(BRICK_WIDTH+2), i*(BRICK_HEIGHT+2), RED, 2))
+                elif layout[i][j] == 3:
+                    self.bricks.append(Brick(j*(BRICK_WIDTH+2), i*(BRICK_HEIGHT+2), GREEN, 3))
 
     def draw(self, screen):
         for brick in self.bricks:
-            brick.draw(screen)
+            pygame.draw.rect(screen, brick.color, brick.rect)
+
+    def collide(self, ball):
+        for brick in self.bricks:
+            if ball.colliderect(brick.rect):
+                brick.hits_remaining -= 1
+                if brick.hits_remaining == 0:
+                    self.bricks.remove(brick)
+                return True
+        return False

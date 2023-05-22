@@ -1,16 +1,22 @@
 # paddle.py
 import pygame
-from config import SCREEN_WIDTH, SCREEN_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, WHITE
+from pygame.locals import *
+from config import *
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, PADDLE_HEIGHT, WHITE
 
 class Paddle:
-    def __init__(self):
-        self.paddle = pygame.Rect(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 50, PADDLE_WIDTH, PADDLE_HEIGHT)
+    def __init__(self, width):
+        self.paddle = pygame.Rect(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 50, width, PADDLE_HEIGHT)
 
     def draw(self, screen):
         pygame.draw.rect(screen, WHITE, self.paddle)
 
-    def move(self, direction):
-        self.paddle.move_ip(direction, 0)
+    def move_paddle(self):
+        keys = pygame.key.get_pressed()
+        if keys[K_LEFT]:
+            self.paddle.move_ip(-7, 0)
+        if keys[K_RIGHT]:
+            self.paddle.move_ip(7, 0)
         if self.paddle.left < 0:
             self.paddle.left = 0
         if self.paddle.right > SCREEN_WIDTH:
