@@ -4,7 +4,7 @@ import sys
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, EASY_SPEED, MODERATE_SPEED, HARD_SPEED, EASY_PADDLE_WIDTH, MODERATE_PADDLE_WIDTH, HARD_PADDLE_WIDTH, WHITE
 
 from game_logic import Game
-background_image = pygame.image.load('C:/Users/user/Desktop/프로그래밍입문/brick out/background.jpg')
+background_image = pygame.image.load('background.jpg')
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Initialize Pygame
