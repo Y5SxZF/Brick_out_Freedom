@@ -5,7 +5,7 @@ from brick import Bricks
 from config import SCREEN_HEIGHT,SCREEN_WIDTH
 import pygame
 from config import *
-background_image = pygame.image.load('background.jpg')
+background_image = pygame.image.load('C:/Users/user/Desktop/프로그래밍입문/brick out/background.jpg')
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 class Game:
