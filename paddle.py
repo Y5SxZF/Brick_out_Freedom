@@ -7,9 +7,11 @@ from config import SCREEN_WIDTH, SCREEN_HEIGHT, PADDLE_HEIGHT, WHITE
 class Paddle:
     def __init__(self, width):
         self.paddle = pygame.Rect(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 50, width, PADDLE_HEIGHT)
+        self.paddle_image = pygame.image.load('res/img/paddle.png')
+        self.paddle_image = pygame.transform.scale(self.paddle_image, (width, PADDLE_HEIGHT))
 
     def draw(self, screen):
-        pygame.draw.rect(screen, WHITE, self.paddle)
+        screen.blit(self.paddle_image, self.paddle)
 
     def move_paddle(self):
         keys = pygame.key.get_pressed()

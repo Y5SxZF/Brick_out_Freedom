@@ -7,11 +7,13 @@ class Ball:
     def __init__(self, speed):
         # Randomly position the ball at the start along the x-axis
         self.ball = pygame.Rect(random.randint(100, SCREEN_WIDTH - 100), SCREEN_HEIGHT // 2, BALL_DIAMETER, BALL_DIAMETER)
+        self.ball_image = pygame.image.load('res/img/ball.png')
+        self.ball_image = pygame.transform.scale(self.ball_image, (BALL_DIAMETER, BALL_DIAMETER))
         # Randomly set the x component of the speed and set the y component to always go down towards the paddle
         self.speed = [speed[0] * random.choice([-1, 1]), abs(speed[1])]
 
     def draw(self, screen):
-        pygame.draw.rect(screen, WHITE, self.ball)
+        screen.blit(self.ball_image, (self.ball.x, self.ball.y))
 
     def move_ball(self):
         self.ball.move_ip(self.speed)
