@@ -5,8 +5,9 @@ from config import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, EASY_SPEED, MODERATE_SPEED,
 
 from game_logic import Game
 background_image = pygame.image.load('res/img/background.jpg')
+intro_image = pygame.image.load('res/img/intro.png')
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
-
+intro_image = pygame.transform.scale(intro_image,(SCREEN_WIDTH,SCREEN_HEIGHT))
 # Initialize Pygame
 pygame.init()
 
@@ -37,7 +38,7 @@ def start_screen():
                 else:
                     return HARD_SPEED, HARD_PADDLE_WIDTH
 
-        screen.fill((0, 0, 0))
+        screen.blit(intro_image,(0,0))
         screen.blit(easy_text, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 6))
         screen.blit(moderate_text, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
         screen.blit(hard_text, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 5 / 6))
