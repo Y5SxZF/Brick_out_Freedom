@@ -4,7 +4,7 @@ import sys
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, EASY_SPEED, MODERATE_SPEED, HARD_SPEED, EASY_PADDLE_WIDTH, MODERATE_PADDLE_WIDTH, HARD_PADDLE_WIDTH, WHITE
 
 from game_logic import Game
-background_image = pygame.image.load('background.jpg')
+background_image = pygame.image.load('res/img/background.jpg')
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Initialize Pygame
@@ -64,12 +64,12 @@ while True:
     if keys[pygame.K_RIGHT]:
         game.paddle.move(10)
 
+
     # Move the ball
     game.ball.move_ball()
 
     # Check ball collision
     game.ball.check_collision()
-
     # Game logic for ball hitting the bottom, bouncing off the paddle, and hitting bricks would go here
     # For now, we will just draw everything
 
