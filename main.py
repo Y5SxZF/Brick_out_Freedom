@@ -4,10 +4,17 @@ import sys
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, EASY_SPEED, MODERATE_SPEED, HARD_SPEED, EASY_PADDLE_WIDTH, MODERATE_PADDLE_WIDTH, HARD_PADDLE_WIDTH, WHITE
 
 from game_logic import Game
-background_image = pygame.image.load('res/img/background.jpg')
+background_image = pygame.image.load('res/img/background.png')
 intro_image = pygame.image.load('res/img/intro.png')
+easy_text = pygame.image.load('res/img/easy.png')
+noraml_text = pygame.image.load('res/img/normal.png')
+hard_text = pygame.image.load('res/img/hard.png')
+
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 intro_image = pygame.transform.scale(intro_image,(SCREEN_WIDTH,SCREEN_HEIGHT))
+easy_text = pygame.transform.scale(easy_text,(70,30))
+noraml_text = pygame.transform.scale(noraml_text,(70,30))
+hard_text = pygame.transform.scale(hard_text,(70,30))
 # Initialize Pygame
 pygame.init()
 
@@ -20,10 +27,6 @@ clock = pygame.time.Clock()
 # Function to display the start screen
 def start_screen():
     font = pygame.font.Font(None, 36)
-    easy_text = font.render("Easy", True, WHITE)
-    moderate_text = font.render("Normal", True, WHITE)
-    hard_text = font.render("Hard", True, WHITE)
-
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,9 +42,9 @@ def start_screen():
                     return HARD_SPEED, HARD_PADDLE_WIDTH
 
         screen.blit(intro_image,(0,0))
-        screen.blit(easy_text, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 6))
-        screen.blit(moderate_text, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
-        screen.blit(hard_text, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 5 / 6))
+        screen.blit(easy_text, (SCREEN_WIDTH / 2.3, SCREEN_HEIGHT / 6))
+        screen.blit(noraml_text, (SCREEN_WIDTH / 2.3, SCREEN_HEIGHT / 2))
+        screen.blit(hard_text, (SCREEN_WIDTH / 2.3, SCREEN_HEIGHT * 5 / 6))
         pygame.display.flip()
         clock.tick(FPS)
 # Start screen

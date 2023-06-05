@@ -8,7 +8,7 @@ from levels import LEVELS
 import sys
 
 from config import *
-background_image = pygame.image.load('res/img/background.jpg')
+background_image = pygame.image.load('res/img/background.png')
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -17,11 +17,30 @@ pygame.mixer.init()
 brick_hit_sound = pygame.mixer.Sound('res/snd/brick_hit.mp3')
 brick_break_sound = pygame.mixer.Sound('res/snd/brick_break.mp3')
 
+class Lives:
+    def __init__(self, total_lives):
+        self.total_lives = total_lives
+        self.life_images = [pygame.transform.scale(pygame.image.load("res/img/life.png"), (30,30)),
+                            pygame.transform.scale(pygame.image.load("res/img/life_half.png"), (30,30)), 
+                            pygame.transform.scale(pygame.image.load("res/img/life_all_gone.png"), (30,30))]
+        self.current_image_index = 0  # index of current image
+
+    def lose_life(self):
+        if self.total_lives > 0:
+            self.total_lives -= 1
+            self.current_image_index += 1
+
+    def draw(self, screen):
+        if self.total_lives > 0:
+            screen.blit(self.life_images[self.current_image_index], (SCREEN_WIDTH-30, 0))
+
+
 class Game:
     def __init__(self, ball_speed, paddle_width):
         self.ball = Ball(ball_speed)
         self.paddle = Paddle(paddle_width)
         self.clock = pygame.time.Clock()
+        self.lives = Lives(3)
         self.lives = 3
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.current_level = 0
@@ -31,6 +50,7 @@ class Game:
         # Check if there is a next level
         if self.current_level < len(LEVELS):
             self.bricks = Bricks(LEVELS[self.current_level])
+            self.lives = Lives(3)
         else:
             print("You have completed all levels!")
             pygame.quit()
@@ -60,8 +80,8 @@ class Game:
             self.ball.move_ball()
 
             if self.ball.ball.bottom > SCREEN_HEIGHT:
-                self.lives -= 1
-                if self.lives == 0:
+                self.lives.lose_life()
+                if self.lives.total_lives == 0:
                     print("Game Over")
                     return False
                 else:
@@ -85,6 +105,7 @@ class Game:
             self.paddle.draw(self.screen)
             self.ball.draw(self.screen)
             self.bricks.draw(self.screen)
+            self.lives.draw(self.screen)
 
             self.update()
 
