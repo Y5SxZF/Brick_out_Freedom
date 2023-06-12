@@ -6,10 +6,15 @@ from config import SCREEN_HEIGHT,SCREEN_WIDTH
 import pygame
 from levels import LEVELS
 import sys
+from time import sleep
 
 from config import *
 background_image = pygame.image.load('res/img/background.png')
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+gameover_image = pygame.image.load('res/img/Game-Over.png')
+gameover_image = pygame.transform.scale(gameover_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+win_image = pygame.image.load('res/img/you_win.png')
+win_image = pygame.transform.scale(win_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 pygame.mixer.init()
@@ -53,6 +58,10 @@ class Game:
             self.lives = Lives(3)
         else:
             print("You have completed all levels!")
+            self.screen.fill((0,0,0))
+            screen.blit(win_image, (0, 0))
+            pygame.display.flip()
+            pygame.time.wait(2000)
             pygame.quit()
             sys.exit()
 
@@ -83,6 +92,10 @@ class Game:
                 self.lives.lose_life()
                 if self.lives.total_lives == 0:
                     print("Game Over")
+                    self.screen.fill((0,0,0))
+                    screen.blit(gameover_image, (0, 0))
+                    pygame.display.flip()
+                    pygame.time.wait(2000)
                     return False
                 else:
                     self.ball.reset_ball()
